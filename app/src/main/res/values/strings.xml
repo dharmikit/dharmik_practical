@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FitPeo Practical</string>
+    <string name="no_data_found">No data found.</string>
+    <string name="check_internet">Please check your internet connection.</string>
+</resources>
