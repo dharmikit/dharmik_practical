@@ -30,14 +30,7 @@ class MainActivity : BaseActivity() {
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
         val view = mainBinding.root
         setContentView(view)
-
-        if(appUtils.isNetworkAvailable(this@MainActivity)) {
-            mainViewModel.fetchPhotoList()
-            setUpObservers()
-        }else{
-            Toast.makeText(this,getString(R.string.check_internet), Toast.LENGTH_SHORT).show()
-            noDataDisplay()
-        }
+        setUpObservers()
     }
 
     private fun setUpObservers(){
@@ -58,6 +51,7 @@ class MainActivity : BaseActivity() {
                 }
             }
         }
+
     }
 
     private fun displayPhotoList(photoList:List<PhotoListItem>){

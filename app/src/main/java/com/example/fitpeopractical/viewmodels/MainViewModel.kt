@@ -1,9 +1,11 @@
 package com.example.fitpeopractical.viewmodels
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fitpeopractical.models.PhotoListItem
 import com.example.fitpeopractical.network.ApiRepository
+import com.example.fitpeopractical.utils.AppUtils
 import com.example.fitpeopractical.utils.NetworkState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -15,16 +17,20 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val apiRepository: ApiRepository): ViewModel(){
+class MainViewModel @Inject constructor(private val apiRepository: ApiRepository,
+        appUtils: AppUtils, context: Context): ViewModel(){
 
     private val _photoList = MutableStateFlow<NetworkState<List<PhotoListItem>>>(NetworkState.Loading)
-
     val photoList: StateFlow<NetworkState<List<PhotoListItem>>> = _photoList
-    private val photo = mutableListOf<PhotoListItem>()
 
-    fun fetchPhotoList() {
+    init {
+        if(appUtils.isNetworkAvailable(context)) {
+            fetchPhotoList()
+        }
+    }
+
+    private fun fetchPhotoList() {
             viewModelScope.launch(Dispatchers.Main) {
-                if(photo.isEmpty()) {
                     _photoList.value = NetworkState.Loading
                     apiRepository.getPhotos()
                         .flowOn(Dispatchers.IO)
@@ -33,11 +39,7 @@ class MainViewModel @Inject constructor(private val apiRepository: ApiRepository
                         }
                         .collect {
                             _photoList.value = NetworkState.Success(it)
-                            photo.addAll(it)
                         }
-                }else {
-                    _photoList.value = NetworkState.Success(photo)
-                }
             }
     }
 }
