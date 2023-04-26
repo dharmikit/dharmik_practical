@@ -18,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(private val apiRepository: ApiRepository,
-        appUtils: AppUtils, context: Context): ViewModel(){
+                                        appUtils: AppUtils,
+                                        context: Context): ViewModel(){
 
     private val _photoList = MutableStateFlow<NetworkState<List<PhotoListItem>>>(NetworkState.Loading)
     val photoList: StateFlow<NetworkState<List<PhotoListItem>>> = _photoList

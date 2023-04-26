@@ -2,14 +2,13 @@ package com.example.fitpeopractical.activities
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.fitpeopractical.R
 import com.example.fitpeopractical.adapter.PhotoListAdapter
 import com.example.fitpeopractical.databinding.ActivityMainBinding
 import com.example.fitpeopractical.models.PhotoListItem
@@ -18,9 +17,8 @@ import com.example.fitpeopractical.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-
 @AndroidEntryPoint
-class MainActivity : BaseActivity() {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var mainBinding: ActivityMainBinding
     private val mainViewModel: MainViewModel by viewModels()
@@ -51,7 +49,6 @@ class MainActivity : BaseActivity() {
                 }
             }
         }
-
     }
 
     private fun displayPhotoList(photoList:List<PhotoListItem>){

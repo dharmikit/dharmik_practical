@@ -1,9 +1,8 @@
 package com.example.fitpeopractical
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.fitpeopractical.network.ApiRepository
 import com.example.fitpeopractical.network.ApiService
-import com.example.fitpeopractical.viewmodels.MainViewModel
+import com.example.fitpeopractical.utils.AppUtils
 import com.google.gson.Gson
 import io.mockk.clearAllMocks
 import io.mockk.mockk
@@ -13,37 +12,32 @@ import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.TestRule
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.HttpURLConnection
 import java.util.concurrent.TimeUnit
 
-class MainViewModelTest {
+class MainViewTest {
 
     private val timeUnit:Long = 10
     private val photoList = "photo_list.json"
 
     private lateinit var apiRepository: ApiRepository
-    private lateinit var mainViewModel: MainViewModel
     private lateinit var mockWebServer: MockWebServer
     private lateinit var apiService: ApiService
+    private lateinit var appUtils: AppUtils
 
     private fun getResponseFile(file: String): String {
         return javaClass.classLoader?.getResourceAsStream(file)!!.bufferedReader()
             .use { it.readText() }.trim()
     }
 
-    @get:Rule
-    val testInstantTaskExecutorRule: TestRule = InstantTaskExecutorRule()
-
     @Before
     fun setUp() {
         mockWebServer = MockWebServer()
         apiRepository = mockk()
-        mainViewModel = MainViewModel(apiRepository)
+        appUtils = mockk()
 
         val client = OkHttpClient.Builder()
             .connectTimeout(timeUnit, TimeUnit.SECONDS)

@@ -1,15 +1,14 @@
 package com.example.fitpeopractical.activities
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import androidx.appcompat.app.AppCompatActivity
 import com.example.fitpeopractical.databinding.ActivitySplashBinding
 import java.util.concurrent.TimeUnit
 
 
-@SuppressLint("CustomSplashScreen")
-class SplashActivity : BaseActivity(){
+class SplashActivity : AppCompatActivity(){
 
     private var handler: Handler? = null
     private var callback: Runnable? = null
